@@ -30,7 +30,7 @@ jobs:
           - name: frontend
             working-directory: tms-frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Backend tests
       - name: Set up JDK 17
@@ -78,7 +78,7 @@ jobs:
             context: ./tms-frontend
             dockerfile: ./tms-frontend/Dockerfile
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -119,7 +119,7 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
