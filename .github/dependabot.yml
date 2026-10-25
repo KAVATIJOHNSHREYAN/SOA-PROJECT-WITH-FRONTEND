@@ -1,0 +1,54 @@
+# Dependabot — Automated dependency update PRs
+version: 2
+
+updates:
+  # Maven (Backend)
+  - package-ecosystem: maven
+    directory: /tms-backend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - backend
+
+  # npm (Frontend)
+  - package-ecosystem: npm
+    directory: /tms-frontend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - frontend
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - ci
+
+  # Docker
+  - package-ecosystem: docker
+    directory: /tms-backend
+    schedule:
+      interval: monthly
+    labels:
+      - dependencies
+      - docker
+
+  - package-ecosystem: docker
+    directory: /tms-frontend
+    schedule:
+      interval: monthly
+    labels:
+      - dependencies
+      - docker
+

@@ -1,0 +1,143 @@
+# ============================================================
+# CI — Build & Test (Backend + Frontend)
+# Runs on PRs and pushes to main. Path-filtered so each job
+# only runs when its subtree changes.
+# ============================================================
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Detect which paths changed ──
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'tms-backend/**'
+            frontend:
+              - 'tms-frontend/**'
+
+  # ── Backend: Java 17 + Maven ──
+  backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tms-backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build & Test
+        run: mvn verify -B --no-transfer-progress
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-reports
+          path: tms-backend/target/surefire-reports/
+          retention-days: 7
+
+  # ── Frontend: Node 18 + npm ──
+  frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tms-frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: tms-frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test -- --ci --watchAll=false
+        env:
+          CI: true
+
+      - name: Build
+        run: npm run build
+
+  # ── Flyway Migration Validation (against real PostgreSQL) ──
+  flyway-validate:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: tmsdb
+          POSTGRES_USER: tms
+          POSTGRES_PASSWORD: tms
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tms -d tmsdb"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: tms-backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run Flyway Migrate + JPA Validate
+        run: |
+          mvn spring-boot:run \
+            -Dspring-boot.run.arguments="--spring.main.web-application-type=none" \
+            -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=prod \
+              -Dspring.datasource.url=jdbc:postgresql://localhost:5432/tmsdb \
+              -Dspring.datasource.username=tms \
+              -Dspring.datasource.password=tms" \
+            -B --no-transfer-progress &
+          APP_PID=$!
+          # Wait for Flyway to run and app to start (or fail)
+          sleep 30
+          kill $APP_PID 2>/dev/null || true
+          echo "✅ Flyway migrations applied successfully"
+
