@@ -42,8 +42,8 @@ function Navbar() {
           {theme === 'light' ? <FiMoon /> : <FiSun />}
         </button>
         <Link to="/profile" className="navbar-user" style={{ cursor: 'pointer' }}>
-          <FiUser />
-          <span>{user?.fullName || user?.username}</span>
+          <div className="navbar-user-avatar">{(user?.fullName || user?.username)?.[0]?.toUpperCase() || 'U'}</div>
+          <span style={{ fontWeight: 600 }}>{user?.fullName || user?.username}</span>
           <span className="navbar-role-badge">{user?.role}</span>
         </Link>
         <button className="btn-logout" onClick={logout}>

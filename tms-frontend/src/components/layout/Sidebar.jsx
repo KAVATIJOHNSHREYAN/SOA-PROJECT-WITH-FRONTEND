@@ -39,8 +39,13 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <FiTruck className="sidebar-logo-icon" />
-        <h2>{intl.formatMessage({ id: 'app.short' })}</h2>
+        <div className="sidebar-logo-icon">
+          <FiTruck />
+        </div>
+        <div>
+          <h2>{intl.formatMessage({ id: 'app.short' })}</h2>
+          <span className="tag">Fleet Logistics</span>
+        </div>
       </div>
       <nav className="sidebar-nav">
         {visibleItems.map((item) => (
@@ -55,7 +60,15 @@ function Sidebar() {
         ))}
       </nav>
       <div className="sidebar-footer">
-        <span className="role-badge">{user?.role}</span>
+        <div className="sidebar-user-pill">
+          <div className="sidebar-avatar">{user?.username?.[0]?.toUpperCase() || 'U'}</div>
+          <div>
+            <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#f8fafc', lineHeight: 1.2 }}>
+              {user?.username || 'User'}
+            </div>
+            <span className="role-badge" style={{ marginTop: '3px' }}>{user?.role}</span>
+          </div>
+        </div>
       </div>
     </aside>
   );

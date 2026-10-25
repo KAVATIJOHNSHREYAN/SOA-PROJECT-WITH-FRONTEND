@@ -1,35 +1,47 @@
 import React from 'react';
 import '../../styles/components.css';
 
-const statusColors = {
-  // Vehicle
-  AVAILABLE: '#4caf50',
-  BUSY: '#ff9800',
-  MAINTENANCE: '#9e9e9e',
-  // Driver
-  ACTIVE: '#4caf50',
-  INACTIVE: '#9e9e9e',
-  // Trip
-  PLANNED: '#2196f3',
-  IN_PROGRESS: '#ff9800',
-  COMPLETED: '#4caf50',
-  // Booking
-  CONFIRMED: '#4caf50',
-  CANCELLED: '#f44336',
-  // LR
-  CREATED: '#2196f3',
-  IN_TRANSIT: '#ff9800',
-  DELIVERED: '#4caf50',
-  // Invoice
-  DRAFT: '#9e9e9e',
-  SENT: '#2196f3',
-  PAID: '#4caf50',
+const statusThemes = {
+  // Success (Emerald Green)
+  AVAILABLE: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  ACTIVE: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  COMPLETED: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  CONFIRMED: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  DELIVERED: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  PAID: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+
+  // Warning / In-Progress (Amber)
+  BUSY: { bg: '#fffbeb', color: '#b45309', border: '#fde68a' },
+  IN_PROGRESS: { bg: '#fffbeb', color: '#b45309', border: '#fde68a' },
+  IN_TRANSIT: { bg: '#fffbeb', color: '#b45309', border: '#fde68a' },
+  PENDING: { bg: '#fffbeb', color: '#b45309', border: '#fde68a' },
+
+  // Info / Scheduled (Indigo / Sky)
+  PLANNED: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
+  CREATED: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
+  SENT: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
+
+  // Danger / Terminated (Crimson)
+  CANCELLED: { bg: '#fef2f2', color: '#b91c1c', border: '#fecaca' },
+  FAILED: { bg: '#fef2f2', color: '#b91c1c', border: '#fecaca' },
+
+  // Neutral (Slate)
+  MAINTENANCE: { bg: '#f8fafc', color: '#475569', border: '#cbd5e1' },
+  INACTIVE: { bg: '#f8fafc', color: '#64748b', border: '#cbd5e1' },
+  DRAFT: { bg: '#f8fafc', color: '#475569', border: '#cbd5e1' },
 };
 
 function StatusBadge({ status }) {
-  const color = statusColors[status] || '#9e9e9e';
+  const theme = statusThemes[status] || { bg: '#f1f5f9', color: '#475569', border: '#cbd5e1' };
   return (
-    <span className="status-badge" style={{ backgroundColor: color }}>
+    <span
+      className="status-badge"
+      style={{
+        backgroundColor: theme.bg,
+        color: theme.color,
+        borderColor: theme.border,
+      }}
+    >
       {status?.replace(/_/g, ' ')}
     </span>
   );

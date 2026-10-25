@@ -80,7 +80,13 @@ function GeofenceForm({ geofence, onSubmit, onCancel }) {
   );
 }
 
-const GEOFENCE_COLORS = { DEPOT: '#2e7d32', RESTRICTED_ZONE: '#c62828', DELIVERY_ZONE: '#1565c0', CUSTOM: '#6a1b9a' };
+const GEOFENCE_COLORS = { DEPOT: '#10b981', RESTRICTED_ZONE: '#ef4444', DELIVERY_ZONE: '#3b82f6', CUSTOM: '#8b5cf6' };
+const GEOFENCE_BADGES = {
+  DEPOT: { bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+  DELIVERY_ZONE: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
+  RESTRICTED_ZONE: { bg: '#fef2f2', color: '#b91c1c', border: '#fecaca' },
+  CUSTOM: { bg: '#faf5ff', color: '#7e22ce', border: '#e9d5ff' },
+};
 
 function GeofenceList() {
   const intl = useIntl();
@@ -146,8 +152,8 @@ function GeofenceList() {
         </MapContainer>
       </div>
 
-      {loading ? <p>{intl.formatMessage({ id: 'loading' })}</p> : (
-        <div style={{ overflowX: 'auto' }}>
+      {loading ? <p className="page-loader">{intl.formatMessage({ id: 'loading' })}</p> : (
+        <div className="table-container">
           <table className="data-table">
             <thead>
               <tr>
@@ -155,23 +161,30 @@ function GeofenceList() {
               </tr>
             </thead>
             <tbody>
-              {geofences.map(g => (
-                <tr key={g.id}>
-                  <td><strong>{g.name}</strong></td>
-                  <td><span className="status-badge" style={{ background: GEOFENCE_COLORS[g.type] || '#6a1b9a', color: '#fff' }}>{g.type}</span></td>
-                  <td>{g.latitude?.toFixed(4)}</td>
-                  <td>{g.longitude?.toFixed(4)}</td>
-                  <td>{g.radiusMeters}</td>
-                  <td>{g.active ? '✅' : '❌'}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <button className="btn btn-sm btn-secondary" onClick={() => { setEditing(g); setModalOpen(true); }}><FiEdit2 /></button>
-                      {hasRole('ADMIN') && <button className="btn btn-sm btn-danger" onClick={() => setDeleteTarget(g)}><FiTrash2 /></button>}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {geofences.length === 0 && <tr><td colSpan={7} style={{ textAlign: 'center' }}>No geofences defined</td></tr>}
+              {geofences.map(g => {
+                const b = GEOFENCE_BADGES[g.type] || { bg: '#f1f5f9', color: '#475569', border: '#cbd5e1' };
+                return (
+                  <tr key={g.id}>
+                    <td><strong>{g.name}</strong></td>
+                    <td>
+                      <span className="status-badge" style={{ backgroundColor: b.bg, color: b.color, borderColor: b.border }}>
+                        {g.type?.replace(/_/g, ' ')}
+                      </span>
+                    </td>
+                    <td>{g.latitude?.toFixed(4)}</td>
+                    <td>{g.longitude?.toFixed(4)}</td>
+                    <td>{g.radiusMeters}m</td>
+                    <td>{g.active ? <span style={{ color: '#059669', fontWeight: 600 }}>Active</span> : <span style={{ color: '#94a3b8' }}>Inactive</span>}</td>
+                    <td>
+                      <div className="actions-cell">
+                        <button className="btn-icon btn-edit" title="Edit" onClick={() => { setEditing(g); setModalOpen(true); }}><FiEdit2 /></button>
+                        {hasRole('ADMIN') && <button className="btn-icon btn-delete" title="Delete" onClick={() => setDeleteTarget(g)}><FiTrash2 /></button>}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+              {geofences.length === 0 && <tr><td colSpan={7} className="empty-row">No geofences defined</td></tr>}
             </tbody>
           </table>
         </div>

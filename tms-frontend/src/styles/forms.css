@@ -1,20 +1,46 @@
-/* === Login Page === */
+/* === Modern Authentication & Form Styles === */
+
+/* === Login & Register Pages === */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
-  padding: 20px;
+  background: radial-gradient(ellipse at 50% 10%, #1e1b4b 0%, #0f172a 60%, #090d16 100%);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-page::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .login-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
-  max-width: 400px;
-  padding: 40px 32px;
+  max-width: 440px;
+  padding: 44px 38px;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+[data-theme="dark"] .login-card {
+  background: rgba(17, 24, 39, 0.95);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .login-header {
@@ -23,76 +49,86 @@
 }
 
 .login-logo {
-  font-size: 3rem;
-  color: var(--primary);
-  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-lg);
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
 }
 
 .login-header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 2px;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  letter-spacing: -0.03em;
 }
 
 .login-header p {
   color: var(--gray-500);
-  font-size: 0.85rem;
-  margin-top: 4px;
+  font-size: 0.9rem;
+  margin-top: 6px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .login-footer {
   text-align: center;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--gray-200);
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
 }
 
 .login-footer p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--gray-500);
 }
 
 .login-footer p + p {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .login-demo-hint {
-  margin-top: 8px;
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--gray-400);
 }
 
 .auth-link {
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   transition: color var(--transition);
 }
 
 .auth-link:hover {
-  color: var(--primary-light);
+  color: var(--primary-dark);
   text-decoration: underline;
 }
 
 .register-card {
-  max-width: 440px;
+  max-width: 480px;
 }
 
 /* === OAuth Section === */
 .oauth-section {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .oauth-divider {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
 .oauth-divider::before,
@@ -100,82 +136,82 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--gray-300);
+  background: var(--border-color);
 }
 
 .oauth-divider span {
-  font-size: 0.8rem;
-  color: var(--gray-500);
+  font-size: 0.78rem;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .oauth-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-oauth {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  font-weight: 500;
+  gap: 12px;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 0.885rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: background var(--transition), box-shadow var(--transition);
+  transition: all var(--transition);
   cursor: pointer;
-  border: 1px solid var(--gray-300);
+  border: 1px solid var(--border-color);
   background: var(--white);
   color: var(--gray-700);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-oauth:hover {
   box-shadow: var(--shadow-sm);
   background: var(--gray-50);
-}
-
-.btn-oauth-google {
-  border-color: #dadce0;
-}
-
-.btn-oauth-microsoft {
-  border-color: #dadce0;
+  border-color: var(--gray-300);
+  transform: translateY(-1px);
 }
 
 /* === Form Fields === */
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .form-label {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--gray-700);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.05em;
 }
 
 .form-input {
-  padding: 10px 12px;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-family: var(--font);
   font-size: 0.9rem;
   color: var(--gray-900);
   background: var(--white);
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition: all var(--transition);
   outline: none;
   width: 100%;
-  font-family: var(--font);
+  box-shadow: var(--shadow-xs);
 }
 
 .form-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 .form-input::placeholder {
@@ -184,21 +220,26 @@
 
 .form-textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 90px;
+  line-height: 1.5;
 }
 
 .form-error {
   color: var(--danger);
   font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 2px;
 }
 
 .form-error-banner {
-  background: rgba(244, 67, 54, 0.08);
+  background: rgba(239, 68, 68, 0.08);
   color: var(--danger);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
   border-left: 3px solid var(--danger);
+  margin-bottom: 12px;
 }
 
 .input-icon-wrapper {
@@ -207,28 +248,28 @@
 
 .input-icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--gray-400);
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .input-icon-wrapper .form-input {
-  padding-left: 38px;
+  padding-left: 42px;
 }
 
 /* === Entity Forms === */
 .entity-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 18px;
 }
 
 .form-grid .form-field:has(.form-textarea) {
@@ -237,26 +278,28 @@
 
 .form-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: flex-end;
-  padding-top: 12px;
-  border-top: 1px solid var(--gray-200);
+  padding-top: 18px;
+  border-top: 1px solid var(--border-color);
 }
 
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   color: var(--gray-700);
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .checkbox-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--primary);
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {
@@ -267,24 +310,24 @@
 
 /* === LR Checklist === */
 .lr-checklist {
-  max-height: 200px;
+  max-height: 220px;
   overflow-y: auto;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-sm);
-  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   background: var(--white);
+  box-shadow: var(--shadow-xs);
 }
 
 .lr-checklist .checkbox-label {
-  padding: 6px 8px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
-  transition: background var(--transition);
+  transition: background var(--transition-fast);
 }
 
 .lr-checklist .checkbox-label:hover {
   background: var(--gray-50);
 }
-
