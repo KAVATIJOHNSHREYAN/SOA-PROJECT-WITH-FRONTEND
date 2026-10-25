@@ -775,17 +775,23 @@ public class DataSeeder implements CommandLineRunner {
     // ───────────────────────────── Geofences ─────────────────────────────
     private void seedGeofences() {
         geofenceRepository.saveAll(List.of(
-                Geofence.builder().name("NY Main Depot").description("Main depot in New York City")
-                        .latitude(40.7128).longitude(-74.006).radiusMeters(500.0)
+                Geofence.builder().name("Mumbai JNPT Port Hub").description("Jawaharlal Nehru Port Terminal logistics zone, Navi Mumbai")
+                        .latitude(18.9496).longitude(72.9515).radiusMeters(1000.0)
                         .type(GeofenceType.DEPOT).build(),
-                Geofence.builder().name("Chicago Warehouse").description("Chicago distribution warehouse")
-                        .latitude(41.8781).longitude(-87.6298).radiusMeters(750.0)
+                Geofence.builder().name("Delhi NCR Freight Depot").description("Central container freight depot, Tughlakabad - Gurugram")
+                        .latitude(28.5020).longitude(77.2915).radiusMeters(800.0)
                         .type(GeofenceType.DEPOT).build(),
-                Geofence.builder().name("Houston Logistics Park").description("Houston logistics and loading area")
-                        .latitude(29.7604).longitude(-95.3698).radiusMeters(1000.0)
+                Geofence.builder().name("Bengaluru Cargo Hub").description("Electronic City freight & e-commerce distribution hub")
+                        .latitude(12.8452).longitude(77.6602).radiusMeters(1200.0)
                         .type(GeofenceType.DELIVERY_ZONE).build(),
-                Geofence.builder().name("Philadelphia Restricted").description("Restricted zone - no unauthorized entry")
-                        .latitude(39.9526).longitude(-75.1652).radiusMeters(300.0)
+                Geofence.builder().name("Chennai Sriperumbudur Corridor").description("Automotive & manufacturing corridor delivery zone")
+                        .latitude(12.9669).longitude(79.9482).radiusMeters(1500.0)
+                        .type(GeofenceType.DELIVERY_ZONE).build(),
+                Geofence.builder().name("Hyderabad Shamshabad Cargo").description("Air cargo and pharma logistics park, Hyderabad")
+                        .latitude(17.2403).longitude(78.4294).radiusMeters(900.0)
+                        .type(GeofenceType.DEPOT).build(),
+                Geofence.builder().name("Pune Chakan Industrial Restricted").description("Restricted heavy industrial plant & hazardous cargo zone")
+                        .latitude(18.7606).longitude(73.8636).radiusMeters(600.0)
                         .type(GeofenceType.RESTRICTED_ZONE).build()
         ));
     }

@@ -3,14 +3,14 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useI18n } from '../../i18n/I18nProvider';
 import { useIntl } from 'react-intl';
-import { FiLogOut, FiUser, FiMoon, FiSun, FiGlobe } from 'react-icons/fi';
+import { FiLogOut, FiMoon, FiSun, FiGlobe, FiSearch, FiLayers } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
 import '../../styles/layout.css';
 
 const LOCALES = [
-  { code: 'en', label: 'EN' },
-  { code: 'hi', label: 'HI' },
+  { code: 'en', label: 'English (EN)' },
+  { code: 'hi', label: 'हिन्दी (HI)' },
 ];
 
 function Navbar() {
@@ -21,32 +21,62 @@ function Navbar() {
 
   return (
     <header className="navbar">
-      <div className="navbar-title">
-        {intl.formatMessage({ id: 'app.title' })}
+      <div className="navbar-left">
+        <div className="workspace-badge" title="Active Logistics Network">
+          <span className="workspace-icon"><FiLayers /></span>
+          <span className="workspace-name">Bharat Logistics Hub</span>
+          <span className="workspace-tag">Mumbai HQ</span>
+        </div>
+
+        <div className="navbar-search">
+          <FiSearch className="navbar-search-icon" />
+          <input
+            type="text"
+            className="navbar-search-input"
+            placeholder="Search trips, vehicles, invoices..."
+            aria-label="Search"
+          />
+          <kbd className="search-shortcut">⌘K</kbd>
+        </div>
       </div>
+
       <div className="navbar-actions">
         <div className="locale-selector">
-          <FiGlobe style={{ marginRight: 4 }} />
+          <FiGlobe style={{ marginRight: 6, color: 'var(--gray-400)' }} />
           <select
             value={locale}
             onChange={(e) => setLocale(e.target.value)}
             className="locale-select"
+            aria-label="Select language"
           >
             {LOCALES.map((l) => (
               <option key={l.code} value={l.code}>{l.label}</option>
             ))}
           </select>
         </div>
+
         <NotificationBell />
-        <button className="btn-theme-toggle" onClick={toggleTheme} title={theme === 'light' ? 'Dark mode' : 'Light mode'}>
+
+        <button
+          className="btn-theme-toggle"
+          onClick={toggleTheme}
+          title={theme === 'light' ? 'Switch to Dark mode' : 'Switch to Light mode'}
+          aria-label="Toggle theme"
+        >
           {theme === 'light' ? <FiMoon /> : <FiSun />}
         </button>
-        <Link to="/profile" className="navbar-user" style={{ cursor: 'pointer' }}>
-          <div className="navbar-user-avatar">{(user?.fullName || user?.username)?.[0]?.toUpperCase() || 'U'}</div>
-          <span style={{ fontWeight: 600 }}>{user?.fullName || user?.username}</span>
-          <span className="navbar-role-badge">{user?.role}</span>
+
+        <Link to="/profile" className="navbar-user" title="View Profile">
+          <div className="navbar-user-avatar">
+            {(user?.fullName || user?.username)?.[0]?.toUpperCase() || 'U'}
+          </div>
+          <div className="navbar-user-info">
+            <span className="navbar-user-name">{user?.fullName || user?.username}</span>
+            <span className="navbar-role-badge">{user?.role}</span>
+          </div>
         </Link>
-        <button className="btn-logout" onClick={logout}>
+
+        <button className="btn-logout" onClick={logout} title="Sign Out">
           <FiLogOut />
           <span>{intl.formatMessage({ id: 'btn.logout' })}</span>
         </button>

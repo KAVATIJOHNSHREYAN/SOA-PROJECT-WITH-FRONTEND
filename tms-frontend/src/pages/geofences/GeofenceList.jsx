@@ -14,10 +14,10 @@ function GeofenceForm({ geofence, onSubmit, onCancel }) {
   const [form, setForm] = useState({
     name: geofence?.name || '',
     description: geofence?.description || '',
-    latitude: geofence?.latitude || 40.7128,
-    longitude: geofence?.longitude || -74.006,
-    radiusMeters: geofence?.radiusMeters || 500,
-    type: geofence?.type || 'CUSTOM',
+    latitude: geofence?.latitude || 19.0760,
+    longitude: geofence?.longitude || 72.8777,
+    radiusMeters: geofence?.radiusMeters || 1000,
+    type: geofence?.type || 'DEPOT',
     active: geofence?.active !== undefined ? geofence.active : true,
   });
 
@@ -129,7 +129,7 @@ function GeofenceList() {
     } catch { toast.error('Delete failed'); }
   };
 
-  const mapCenter = geofences.length > 0 ? [geofences[0].latitude, geofences[0].longitude] : [40.7128, -74.006];
+  const mapCenter = geofences.length > 0 ? [geofences[0].latitude, geofences[0].longitude] : [20.5937, 78.9629];
 
   return (
     <div className="page-container">

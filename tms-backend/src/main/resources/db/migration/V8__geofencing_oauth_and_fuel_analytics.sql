@@ -48,8 +48,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_users_oauth ON users(oauth_provider, oauth
 -- ─── Seed sample geofences ───
 INSERT INTO geofences (name, description, latitude, longitude, radius_meters, type, active)
 VALUES
-    ('NY Main Depot', 'Main depot in New York City', 40.7128, -74.0060, 500, 'DEPOT', true),
-    ('Chicago Warehouse', 'Chicago distribution warehouse', 41.8781, -87.6298, 750, 'DEPOT', true),
-    ('Houston Logistics Park', 'Houston logistics and loading area', 29.7604, -95.3698, 1000, 'DELIVERY_ZONE', true),
-    ('Philadelphia Restricted', 'Restricted zone - no unauthorized entry', 39.9526, -75.1652, 300, 'RESTRICTED_ZONE', true);
+    ('Mumbai JNPT Port Hub', 'Jawaharlal Nehru Port Terminal logistics zone, Navi Mumbai', 18.9496, 72.9515, 1000, 'DEPOT', true),
+    ('Delhi NCR Freight Depot', 'Central container freight depot, Tughlakabad - Gurugram', 28.5020, 77.2915, 800, 'DEPOT', true),
+    ('Bengaluru Cargo Hub', 'Electronic City freight & e-commerce distribution hub', 12.8452, 77.6602, 1200, 'DELIVERY_ZONE', true),
+    ('Chennai Sriperumbudur Corridor', 'Automotive & manufacturing corridor delivery zone', 12.9669, 79.9482, 1500, 'DELIVERY_ZONE', true),
+    ('Hyderabad Shamshabad Cargo', 'Air cargo and pharma logistics park, Hyderabad', 17.2403, 78.4294, 900, 'DEPOT', true),
+    ('Pune Chakan Industrial Restricted', 'Restricted heavy industrial plant & hazardous cargo zone', 18.7606, 73.8636, 600, 'RESTRICTED_ZONE', true);
+
 

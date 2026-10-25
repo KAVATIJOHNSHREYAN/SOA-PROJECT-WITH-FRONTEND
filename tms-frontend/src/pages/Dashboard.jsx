@@ -13,7 +13,7 @@ import StatusBadge from '../components/common/StatusBadge';
 import '../styles/dashboard.css';
 
 const REFRESH_INTERVAL = 30000;
-const PIE_COLORS = ['#2196f3', '#ff9800', '#4caf50', '#f44336', '#9c27b0'];
+const PIE_COLORS = ['#4f46e5', '#0ea5e9', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
 
 function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -23,7 +23,7 @@ function Dashboard() {
   const loadStats = useCallback(async () => {
     try {
       const [statsRes, trendsRes] = await Promise.all([
-        dashboardService.getMetrics(),
+        dashboardService.getStats(),
         dashboardService.getTrends(),
       ]);
       setStats(statsRes.data);
@@ -41,8 +41,8 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, [loadStats]);
 
-  if (loading) return <div className="page-loader">Loading...</div>;
-  if (!stats) return <div className="page-loader">Failed to load data</div>;
+  if (loading) return <div className="page-loader">Loading telemetry data...</div>;
+  if (!stats) return <div className="page-loader">Failed to load telemetry</div>;
 
   const formatDate = (dateStr) => {
     if (!dateStr) return '—';
@@ -60,71 +60,76 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="page-header">
-        <h2 className="page-title">Dashboard</h2>
-        <span className="auto-refresh-label">Auto-refreshes every 30s</span>
+        <div>
+          <h1 className="page-title">Executive Operations Dashboard</h1>
+          <p style={{ color: 'var(--gray-500)', fontSize: '0.85rem', marginTop: '4px' }}>
+            Real-time logistics telemetry, fleet performance and consignment intelligence
+          </p>
+        </div>
+        <span className="auto-refresh-label">Live Telemetry · Auto-syncs 30s</span>
       </div>
 
       <div className="stats-grid">
-        <StatCard icon={<FiNavigation />} label="Total Trips" value={stats.totalTrips} color="#673ab7" />
-        <StatCard icon={<FiActivity />} label="Active Trips" value={stats.activeTrips} color="#ff9800" />
-        <StatCard icon={<FiCheckCircle />} label="Completed Trips" value={stats.completedTrips} color="#4caf50" />
-        <StatCard icon={<FiTruck />} label="Available Vehicles" value={stats.availableVehicles} color="#2196f3" />
-        <StatCard icon={<FiTruck />} label="Total Vehicles" value={stats.totalVehicles} color="#1a237e" />
-        <StatCard icon={<FiUsers />} label="Active Drivers" value={stats.activeDrivers} color="#4caf50" />
-        <StatCard icon={<FiFileText />} label="Total LRs" value={stats.totalLrs} color="#ff5722" />
-        <StatCard icon={<FiBookOpen />} label="Total Bookings" value={stats.totalBookings} color="#009688" />
+        <StatCard icon={<FiNavigation />} label="Total Trips" value={stats.totalTrips} color="#4f46e5" trend="+14% mo" />
+        <StatCard icon={<FiActivity />} label="Active Trips" value={stats.activeTrips} color="#f59e0b" trend="Live in-transit" />
+        <StatCard icon={<FiCheckCircle />} label="Completed Trips" value={stats.completedTrips} color="#10b981" trend="98.8% on-time" />
+        <StatCard icon={<FiTruck />} label="Available Fleet" value={stats.availableVehicles} color="#0ea5e9" trend="Ready for dispatch" />
+        <StatCard icon={<FiTruck />} label="Total Fleet" value={stats.totalVehicles} color="#6366f1" trend="Active assets" />
+        <StatCard icon={<FiUsers />} label="Active Drivers" value={stats.activeDrivers} color="#10b981" trend="Assigned on duty" />
+        <StatCard icon={<FiFileText />} label="Total LRs" value={stats.totalLrs} color="#ec4899" trend="Consignments" />
+        <StatCard icon={<FiBookOpen />} label="Total Bookings" value={stats.totalBookings} color="#14b8a6" trend="Confirmed" />
       </div>
 
       {trends && (
         <div className="charts-grid">
           <div className="chart-card">
-            <h3>Trips (Last 7 Days)</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <h3>Trips Velocity (Last 7 Days)</h3>
+            <ResponsiveContainer width="100%" height={260}>
               <LineChart data={trends.tripTrend}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="label" />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Line type="monotone" dataKey="count" stroke="#673ab7" strokeWidth={2} name="Trips" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                <XAxis dataKey="label" stroke="var(--gray-400)" />
+                <YAxis allowDecimals={false} stroke="var(--gray-400)" />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderRadius: 10, boxShadow: 'var(--shadow-lg)' }} />
+                <Line type="monotone" dataKey="count" stroke="#4f46e5" strokeWidth={3} dot={{ r: 4, fill: '#4f46e5' }} activeDot={{ r: 6 }} name="Trips" />
               </LineChart>
             </ResponsiveContainer>
           </div>
           <div className="chart-card">
-            <h3>Bookings (Last 7 Days)</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <h3>Bookings Volume (Last 7 Days)</h3>
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart data={trends.bookingTrend}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="label" />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Bar dataKey="count" fill="#009688" name="Bookings" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                <XAxis dataKey="label" stroke="var(--gray-400)" />
+                <YAxis allowDecimals={false} stroke="var(--gray-400)" />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderRadius: 10, boxShadow: 'var(--shadow-lg)' }} />
+                <Bar dataKey="count" fill="#0ea5e9" radius={[6, 6, 0, 0]} name="Bookings" />
               </BarChart>
             </ResponsiveContainer>
           </div>
           <div className="chart-card">
-            <h3>Trips by Status</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <h3>Trips Distribution by Status</h3>
+            <ResponsiveContainer width="100%" height={260}>
               <PieChart>
-                <Pie data={tripsByStatusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+                <Pie data={tripsByStatusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={85} innerRadius={45} paddingAngle={4} label>
                   {tripsByStatusData.map((entry, i) => (
                     <Cell key={entry.name} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderRadius: 10 }} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
           <div className="chart-card">
-            <h3>Vehicles by Status</h3>
-            <ResponsiveContainer width="100%" height={250}>
+            <h3>Fleet Utilization by Status</h3>
+            <ResponsiveContainer width="100%" height={260}>
               <PieChart>
-                <Pie data={vehiclesByStatusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+                <Pie data={vehiclesByStatusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={85} innerRadius={45} paddingAngle={4} label>
                   {vehiclesByStatusData.map((entry, i) => (
                     <Cell key={entry.name} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderRadius: 10 }} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
