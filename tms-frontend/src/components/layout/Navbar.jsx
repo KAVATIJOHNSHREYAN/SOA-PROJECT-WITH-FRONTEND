@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { FiLogOut, FiMoon, FiSun, FiGlobe, FiSearch, FiLayers } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
+import { getAvatarUrl, handleAvatarError } from '../../utils/avatarUtils';
 import '../../styles/layout.css';
 
 const LOCALES = [
@@ -68,7 +69,12 @@ function Navbar() {
 
         <Link to="/profile" className="navbar-user" title="View Profile">
           <div className="navbar-user-avatar">
-            {(user?.fullName || user?.username)?.[0]?.toUpperCase() || 'U'}
+            <img
+              src={getAvatarUrl(user?.avatarUrl, user)}
+              alt="User Portrait"
+              onError={(e) => handleAvatarError(e, user)}
+              className="navbar-user-avatar-img"
+            />
           </div>
           <div className="navbar-user-info">
             <span className="navbar-user-name">{user?.fullName || user?.username}</span>

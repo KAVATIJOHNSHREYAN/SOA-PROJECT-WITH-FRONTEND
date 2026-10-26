@@ -6,6 +6,7 @@ import {
   FiGrid, FiTruck, FiUsers, FiMap, FiNavigation, FiBookOpen, FiFileText, FiShield,
   FiDollarSign, FiBarChart2, FiActivity, FiLink, FiCreditCard, FiTarget, FiDroplet, FiTool
 } from 'react-icons/fi';
+import { getAvatarUrl, handleAvatarError } from '../../utils/avatarUtils';
 import '../../styles/layout.css';
 
 const navGroups = [
@@ -93,7 +94,14 @@ function Sidebar() {
 
       <div className="sidebar-footer">
         <div className="sidebar-user-pill">
-          <div className="sidebar-avatar">{user?.username?.[0]?.toUpperCase() || 'U'}</div>
+          <div className="sidebar-avatar">
+            <img
+              src={getAvatarUrl(user?.avatarUrl, user)}
+              alt="User"
+              onError={(e) => handleAvatarError(e, user)}
+              className="sidebar-avatar-img"
+            />
+          </div>
           <div>
             <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#f8fafc', lineHeight: 1.2 }}>
               {user?.username || 'User'}

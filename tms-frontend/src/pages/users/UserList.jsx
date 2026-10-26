@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight, FiShield, FiUserCheck, FiUserX } from 'r
 import { toast } from 'react-toastify';
 import userService from '../../services/userService';
 import StatusBadge from '../../components/common/StatusBadge';
+import { getAvatarUrl, handleAvatarError } from '../../utils/avatarUtils';
 import '../../styles/components.css';
 
 const ROLES = ['ADMIN', 'DISPATCHER', 'DRIVER', 'CLIENT'];
@@ -82,7 +83,25 @@ function UserList() {
             ) : (
               users.map(user => (
                 <tr key={user.id}>
-                  <td><strong>{user.username}</strong></td>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <img
+                        src={getAvatarUrl(user.avatarUrl, user)}
+                        alt={user.username}
+                        onError={(e) => handleAvatarError(e, user)}
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: '50%',
+                          objectFit: 'cover',
+                          border: '2px solid rgba(56, 189, 248, 0.4)',
+                          boxShadow: '0 2px 6px rgba(14, 165, 233, 0.25)',
+                          flexShrink: 0
+                        }}
+                      />
+                      <strong>{user.username}</strong>
+                    </div>
+                  </td>
                   <td>{user.fullName || '—'}</td>
                   <td>{user.email}</td>
                   <td>

@@ -30,6 +30,11 @@ function authReducer(state, action) {
       return { ...state, loading: false, error: action.payload };
     case 'CLEAR_ERROR':
       return { ...state, error: null };
+    case 'UPDATE_USER': {
+      const updatedUser = { ...state.user, ...action.payload };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      return { ...state, user: updatedUser };
+    }
     case 'LOGOUT':
       return { ...initialState, user: null, token: null, refreshToken: null, isAuthenticated: false };
     default:
@@ -50,8 +55,8 @@ export function AuthProvider({ children }) {
     dispatch({ type: 'AUTH_START' });
     try {
       const response = await api.post('/auth/login', { username, password });
-      const { token, refreshToken, username: uname, email, fullName, role } = response.data;
-      const user = { username: uname, email, fullName, role };
+      const { token, refreshToken, username: uname, email, fullName, role, avatarUrl } = response.data;
+      const user = { username: uname, email, fullName, role, avatarUrl };
 
       persistAuth(token, refreshToken, user);
       dispatch({ type: 'AUTH_SUCCESS', payload: { user, token, refreshToken } });
@@ -67,8 +72,8 @@ export function AuthProvider({ children }) {
     dispatch({ type: 'AUTH_START' });
     try {
       const response = await api.post('/auth/register', userData);
-      const { token, refreshToken, username, email, fullName, role } = response.data;
-      const user = { username, email, fullName, role };
+      const { token, refreshToken, username, email, fullName, role, avatarUrl } = response.data;
+      const user = { username, email, fullName, role, avatarUrl };
 
       persistAuth(token, refreshToken, user);
       dispatch({ type: 'AUTH_SUCCESS', payload: { user, token, refreshToken } });
@@ -99,13 +104,17 @@ export function AuthProvider({ children }) {
     return state.user && roles.includes(state.user.role);
   };
 
+  const updateUser = (updatedFields) => {
+    dispatch({ type: 'UPDATE_USER', payload: updatedFields });
+  };
+
   const loginWithOAuth = (token, refreshToken, user) => {
     persistAuth(token, refreshToken, user);
     dispatch({ type: 'AUTH_SUCCESS', payload: { user, token, refreshToken } });
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, login, register, logout, clearError, hasRole, loginWithOAuth }}>
+    <AuthContext.Provider value={{ ...state, login, register, logout, clearError, hasRole, updateUser, loginWithOAuth }}>
       {children}
     </AuthContext.Provider>
   );
