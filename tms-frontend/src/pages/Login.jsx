@@ -187,18 +187,34 @@ function Login() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Logo Section — The Sole Hero Brand Identity */}
+          {/* Logo Section — The Sole Hero Brand Identity with Slow Heartbeat Pulse */}
           <div className="luxury-brand-section">
             <motion.div 
               className="luxury-logo-frame"
-              animate={{ scale: [1, 1.018, 1] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              animate={{ 
+                scale: [1, 1.042, 1.012, 1.062, 1, 1],
+                filter: [
+                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))',
+                  'drop-shadow(0 6px 26px rgba(96, 165, 250, 0.85)) drop-shadow(0 0 45px rgba(59, 130, 246, 0.6))',
+                  'drop-shadow(0 5px 18px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 30px rgba(37, 99, 235, 0.35))',
+                  'drop-shadow(0 8px 32px rgba(96, 165, 250, 0.95)) drop-shadow(0 0 55px rgba(59, 130, 246, 0.7))',
+                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))',
+                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))'
+                ]
+              }}
+              transition={{ 
+                duration: 2.8, 
+                repeat: Infinity, 
+                ease: 'easeInOut',
+                times: [0, 0.14, 0.26, 0.42, 0.60, 1]
+              }}
             >
               <img 
                 src={logoImg} 
                 alt="TMS - Transport Management System" 
                 className="luxury-logo-img" 
               />
+              <div className="luxury-logo-heartbeat-pulse" />
             </motion.div>
             <h1 className="luxury-title">TMS</h1>
             <p className="luxury-subtitle">Transport Management System</p>
