@@ -53,12 +53,13 @@ SOA REVIEW 2/
 │           └── java/com/tms/      # Spring Boot Integration Tests
 │
 └── tms-frontend/                  # React 18 Single Page Application
-    ├── package.json               # NPM dependencies & scripts
+    ├── package.json               # NPM dependencies & scripts (with Framer Motion)
     ├── Dockerfile                 # Multi-stage Node + Nginx build
     ├── nginx.conf                 # Nginx reverse proxy configuration
-    ├── public/                    # Static assets & index.html
+    ├── public/                    # Static assets, favicon, & index.html
     └── src/
-        ├── api/                   # Axios instance, interceptors, token refresh
+        ├── api/                   # Axios instance, interceptors, token refresh, multipart boundary handler
+        ├── assets/                # Official brand assets (logo.jpg)
         ├── components/
         │   ├── common/            # DataTable, Modal, StatusBadge, ProtectedRoute
         │   ├── layout/            # MainLayout, Navbar, Sidebar, NotificationBell
@@ -72,7 +73,7 @@ SOA REVIEW 2/
         │   ├── bookings/          # BookingList, BookingForm
         │   ├── drivers/           # DriverList, DriverForm
         │   ├── expenses/          # ExpenseList, ExpenseForm
-        │   ├── geofences/         # GeofenceList (Leaflet circle zones)
+        │   ├── geofences/         # GeofenceList (Leaflet circle zones - Indian hubs)
         │   ├── invoices/          # InvoiceList, InvoiceForm
         │   ├── lrs/               # LrList, LrForm
         │   ├── profile/           # ProfilePage, Avatar upload
@@ -84,10 +85,10 @@ SOA REVIEW 2/
         │   ├── vehicles/          # VehicleList, VehicleForm
         │   ├── webhooks/          # WebhookList
         │   ├── Dashboard.jsx      # Analytics Dashboard with Recharts
-        │   ├── Login.jsx          # Login with credentials + OAuth2 buttons
+        │   ├── Login.jsx          # World-Class Luxury Login with Framer Motion
         │   └── Register.jsx       # User registration
         ├── services/              # API wrapper services
-        ├── styles/                # CSS modules (global, layout, forms, dashboard)
+        ├── styles/                # CSS modules (luxury-login.css, global, layout, forms, dashboard)
         └── __tests__/             # Frontend unit test suites
 ```
 
@@ -317,22 +318,37 @@ In a distributed microservices deployment:
 - **Cause:** Attempting to serialize lazy-loaded invoice items outside a transactional session.
 - **Solution:** `InvoicePdfService.generatePdf(UUID invoiceId)` has been annotated with `@Transactional(readOnly = true)` ensuring the Hibernate session is active during PDF generation.
 
-### Issue: "NaN in Trip ID during Booking creation"
-- **Cause:** `tripId` is a UUID string. Parsing it via `parseInt()` corrupts the ID.
-- **Solution:** `BookingForm.jsx` preserves the UUID string verbatim when posting to `/bookings`.
+### Issue: Avatar or Attachment Upload Fails / Stored as 0-byte File
+- **Cause:** When Axios is initialized with a default `'Content-Type': 'application/json'`, passing `FormData` can inadvertently strip the boundary string needed by the servlet multipart parser.
+- **Solution:** In `src/api/axios.js`, the request interceptor automatically detects `config.data instanceof FormData` and deletes `'Content-Type'` so the browser sets the correct `multipart/form-data; boundary=...` header.
 
-### Issue: Maven "mvn is not recognized" on Windows
-- **Cause:** Maven is not added to Windows system PATH.
-- **Solution:** Always use the included wrapper:
-  ```powershell
-  .\mvnw.cmd spring-boot:run
-  ```
+### Issue: Browser Autofill Overrides Luxury Glassmorphic Inputs with White Background
+- **Cause:** Chrome and Edge force an internal `-webkit-autofill` background color (`#ffffff`) when suggesting saved credentials.
+- **Solution:** In `luxury-login.css`, `.luxury-input:-webkit-autofill` uses an inset box shadow (`-webkit-box-shadow: 0 0 0 1000px #0b1426 inset !important`) and light caret fill to preserve the dark luxury glass aesthetic.
 
 ---
 
-## 10. Summary of Production Readiness
+## 10. World-Class Enterprise Authentication UI & Design Architecture
+
+### 10.1 Design System Philosophy
+Inspired by Fortune 500 SaaS leaders (Stripe, Linear, Apple, Vercel, and Raycast), the authentication system revolves entirely around the **official TMS website brand identity** with zero generic stock images or clip-art:
+- **Palette:** Deep Midnight Navy (`#071225`, `#0B1220`, `#111827`) with Royal & Sapphire Blue accents (`#1D4ED8`, `#2563EB`, `#3B82F6`).
+- **Surface Elevation:** Frosted glassmorphism card (`backdrop-filter: blur(28px)`, `background: rgba(11, 20, 38, 0.76)`), `22px` border radius, micro-border (`1px solid rgba(59, 130, 246, 0.24)`), and subtle ambient drop-glow.
+- **Still Background Truck UI:** The high-resolution official logo background (fleet truck, digital globe, and TMS watermark) remains **completely still and stable** across the entire page as a luxury backdrop.
+- **Dark Blue Heartbeat Wave Rings:** Concentric wave rings (`wave-1` through `wave-4`) centered directly beneath the login card radiate outward with a physiological resting heartbeat sequence (`lub-dub` pulse every `2.8s`), using deep royal navy and dark sapphire color modes (`#1D4ED8`, `#1E40AF`, `#1E3A8A`).
+- **Stationary Full-Width Card Logo:** The official TMS logo within the login card is rendered in a full-width container (`max-width: 340px`) without distracting pulse animations, ensuring immediate readability.
+
+### 10.2 Component Stack
+- **Component:** `tms-frontend/src/pages/Login.jsx`
+- **Styling Tokens:** `tms-frontend/src/styles/luxury-login.css`
+- **Animation Engine:** Framer Motion (`framer-motion` 14.6)
+- **Top Brand Bar:** Top-left official TMS logo badge with real-time `● Cloud Active` network status, and top-right language (`EN` / `HI`) & dark/light mode toggle capsule.
+
+---
+
+## 11. Summary of Production Readiness
 
 - **Backend:** 157 Java source files, all unit/integration tests passing cleanly.
-- **Frontend:** React 18 SPA with Dark Mode, i18n localization (English & Hindi), responsive UI for mobile/desktop, zero console errors or build warnings.
-- **Security:** Standard JWT with refresh token rotation and `@PreAuthorize` role access control.
+- **Frontend:** React 18 SPA with Framer Motion, Luxury Enterprise Login, Dark Mode, i18n localization (English & Hindi), responsive UI for mobile/desktop, zero console errors or build warnings.
+- **Security:** Standard JWT with refresh token rotation, dark autofill defense, and `@PreAuthorize` role access control.
 - **Containers:** Multi-stage Dockerfiles and Docker Compose configured and tested.

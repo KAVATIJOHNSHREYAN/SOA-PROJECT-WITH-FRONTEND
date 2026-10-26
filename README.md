@@ -1,18 +1,19 @@
 <p align="center">
-  <img src="https://img.icons8.com/fluency/96/truck.png" alt="TMS Logo" width="80" />
+  <img src="tms-frontend/src/assets/logo.jpg" alt="TMS Logo" width="220" style="border-radius: 14px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);" />
 </p>
 
-<h1 align="center">Transport Management System</h1>
+<h1 align="center">Transport Management System (TMS)</h1>
 
 <p align="center">
-  A production-ready, full-stack Transport Management System built with <strong>Spring Boot 3</strong> and <strong>React 18</strong>.<br/>
-  Featuring JWT authentication, SSO (Google/Microsoft), role-based authorization, real-time GPS tracking, geofencing, fuel analytics, and Docker-ready deployment.
+  An enterprise-grade, full-stack Transport Management System built with <strong>Spring Boot 3.2</strong> and <strong>React 18</strong>.<br/>
+  Featuring a world-class luxury login experience, JWT authentication, OAuth2 SSO (Google/Microsoft), role-based access control, real-time GPS tracking, Indian hub geofencing, fuel analytics, and Docker-ready deployment.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-17-orange?logo=openjdk&logoColor=white" alt="Java 17" />
   <img src="https://img.shields.io/badge/Spring_Boot-3.2-6DB33F?logo=spring-boot&logoColor=white" alt="Spring Boot" />
   <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black" alt="React 18" />
+  <img src="https://img.shields.io/badge/Framer_Motion-14.6-black?logo=framer&logoColor=white" alt="Framer Motion" />
   <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL" />
   <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/WebSocket-STOMP-010101?logo=socketdotio&logoColor=white" alt="WebSocket" />
@@ -47,9 +48,9 @@
 ### Core Modules
 | Module | Description |
 |--------|-------------|
-| **🔐 Authentication** | JWT-based login & registration with BCrypt hashing, refresh token rotation, change password, SSO via Google & Microsoft (OAuth2) |
+| **🔐 Authentication** | World-class enterprise luxury login with official TMS identity, stationary background truck & globe artwork, dark blue concentric heartbeat circle waves under the card, full-width stationary hero logo, JWT auth with BCrypt hashing, refresh token rotation, dark autofill protection, and SSO via Google & Microsoft (OAuth2) |
 | **👥 User Management** | Admin panel for managing users — change roles, activate/deactivate accounts |
-| **👤 User Profile** | Self-service profile editing, avatar upload, and password change UI |
+| **👤 User Profile** | Self-service profile editing, avatar upload with automatic multipart boundary preservation, and password change UI |
 | **🚛 Fleet Management** | Full CRUD for vehicles with type/status filtering (Truck, Van, Bus, Mini-Bus) |
 | **🧑‍✈️ Driver Management** | Driver registry with license tracking, status management, and availability |
 | **🗺️ Route Management** | Origin–destination route definitions with distance & estimated time |
@@ -70,17 +71,19 @@
 | **🔗 Webhook Integrations** | Push trip/booking/LR events to external systems with HMAC-signed payloads and Spring Retry |
 | **✉️ Email Notifications** | Booking confirmations, trip status updates, and LR dispatch alerts via Spring Boot Mail |
 | **🔑 SSO / OAuth2** | Single sign-on with Google and Microsoft — auto-creates or links accounts on first OAuth login |
-| **📌 Geofencing** | Define circular geofence zones on a map, trigger alerts when vehicles enter/exit zones via Haversine distance checks |
+| **📌 Geofencing** | Define circular geofence zones on Leaflet maps with default Indian transport hubs, trigger alerts when vehicles cross boundaries |
 | **⛽ Fuel Analytics** | Fuel efficiency tracking with cost-per-km breakdowns by vehicle, monthly spend trends, and analytics dashboard |
 
 ### Platform Capabilities
+- **World-Class Enterprise UI** — Fortune 500 aesthetic inspired by Stripe, Linear, Apple; glassmorphism design system, dark-blue concentric heartbeat wave animations, and high-security gateway controls
 - **Role-Based Access Control** — 4 roles (Admin, Dispatcher, Driver, Client) with granular permissions
 - **SSO / OAuth2** — Single sign-on with Google & Microsoft; auto-creates or links user accounts
 - **Refresh Token Rotation** — Secure refresh tokens with silent renewal and revocation
 - **Multi-Tenant Support** — Tenant-aware data isolation with subdomain-based tenants (Admin managed)
 - **WebSocket Real-Time** — STOMP over SockJS for live GPS location updates and notification push
-- **Geofencing** — Define geofence zones with real-time enter/exit alerts via Haversine distance checking
+- **Indian Logistics Geofencing** — Preconfigured Indian transport hubs (Mumbai, Delhi, Bangalore, etc.) with real-time Haversine distance detection
 - **Fuel Analytics** — Cost-per-km breakdowns, monthly trends, per-vehicle efficiency metrics
+- **Avatar & File Attachment Resilience** — Automatic multipart boundary handling in Axios avoiding payload corruption
 - **Dark Mode** — Theme toggle with CSS custom properties and localStorage persistence
 - **i18n / Localization** — Multi-language support with `react-intl` (English, Hindi)
 - **Real-Time Dashboard** — Recharts-powered visualizations with auto-refresh
@@ -105,7 +108,7 @@
 | **Email** | Spring Boot Mail Starter (async, toggled by `app.email.enabled`) |
 | **WebSocket** | Spring WebSocket + STOMP + SockJS (real-time GPS tracking & notifications) |
 | **Webhooks** | Spring Retry + `@Async` for reliable event dispatch |
-| **Frontend** | React 18 · React Router v6 · Axios · Recharts · React Toastify · React Icons |
+| **Frontend** | React 18 · React Router v6 · Framer Motion 14.6 · Axios · Recharts · React Toastify · React Icons |
 | **Maps** | Leaflet · React Leaflet (trip GPS tracking with historical route playback) |
 | **i18n** | react-intl (English, Hindi) |
 | **State** | Context API + `useReducer` for auth · ThemeContext for dark mode · I18nProvider for locale |
