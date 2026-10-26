@@ -97,34 +97,15 @@ function Login() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Full-Screen Immersive Official Website Logo Background with Heartbeat Pulse */}
-      <motion.div 
-        className="luxury-bg-logo-layer"
-        animate={{ 
-          scale: [1, 1.028, 1.01, 1.042, 1, 1],
-          filter: [
-            'brightness(0.65) contrast(1.15) saturate(1.2)',
-            'brightness(0.80) contrast(1.22) saturate(1.35)',
-            'brightness(0.70) contrast(1.18) saturate(1.25)',
-            'brightness(0.86) contrast(1.25) saturate(1.40)',
-            'brightness(0.65) contrast(1.15) saturate(1.2)',
-            'brightness(0.65) contrast(1.15) saturate(1.2)'
-          ]
-        }}
-        transition={{ 
-          duration: 3.0, 
-          repeat: Infinity, 
-          ease: 'easeInOut',
-          times: [0, 0.14, 0.26, 0.42, 0.60, 1]
-        }}
-      >
+      {/* Full-Screen Immersive Official Website Logo Background — Still & Stable */}
+      <div className="luxury-bg-logo-layer">
         <img 
           src={logoImg} 
           alt="TMS Transport Management System" 
           className="luxury-bg-logo-img" 
         />
         <div className="luxury-bg-logo-overlay" />
-      </motion.div>
+      </div>
 
       {/* Background Animated Ambient Glowing Mesh Spheres */}
       <motion.div 
@@ -191,24 +172,16 @@ function Login() {
         </div>
       </header>
 
-      {/* Centered Luxury Glass Card with Backside Heartbeat Pulse */}
+      {/* Centered Luxury Glass Card with Heartbeat Circle Waves */}
       <main className="luxury-center-container">
-        {/* Backside Heartbeat Glowing Aura behind Card */}
-        <motion.div 
-          className="card-ambient-glow"
-          animate={{ 
-            scale: [1, 1.28, 1.08, 1.38, 1, 1],
-            opacity: [0.38, 0.85, 0.52, 0.95, 0.38, 0.38]
-          }}
-          transition={{ 
-            duration: 3.0, 
-            repeat: Infinity, 
-            ease: 'easeInOut',
-            times: [0, 0.14, 0.26, 0.42, 0.60, 1]
-          }}
-        />
-        <div className="backside-heartbeat-pulse-ring" />
-        <div className="backside-heartbeat-pulse-ring ring-secondary" />
+        {/* Soft Ambient Core Glow behind Card */}
+        <div className="card-ambient-glow" />
+
+        {/* Heartbeat Pulsing Circle Waves coming from under the login box */}
+        <div className="heartbeat-circle-wave wave-1" />
+        <div className="heartbeat-circle-wave wave-2" />
+        <div className="heartbeat-circle-wave wave-3" />
+        <div className="heartbeat-circle-wave wave-4" />
         
         <motion.div 
           className="luxury-login-card"
