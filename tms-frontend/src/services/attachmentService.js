@@ -6,7 +6,7 @@ const attachmentService = {
     formData.append('file', file);
     formData.append('entityType', entityType);
     formData.append('entityId', entityId);
-    return api.post('/attachments/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    return api.post('/attachments/upload', formData);
   },
   listByEntity: (entityType, entityId) => api.get('/attachments', { params: { entityType, entityId } }),
   download: (id) => api.get(`/attachments/${id}/download`, { responseType: 'blob' }),

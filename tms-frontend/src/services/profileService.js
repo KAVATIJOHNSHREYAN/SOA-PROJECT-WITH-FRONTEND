@@ -6,9 +6,7 @@ const profileService = {
   uploadAvatar: (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    return api.post('/profile/avatar', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    return api.post('/profile/avatar', formData);
   },
 };
 

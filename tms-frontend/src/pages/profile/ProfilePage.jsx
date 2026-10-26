@@ -36,16 +36,25 @@ function ProfilePage() {
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    // Immediately display local preview so user sees chosen photo with 0ms delay
+    const previewUrl = URL.createObjectURL(file);
+    setAvatarUrl(previewUrl);
+
     try {
       const res = await profileService.uploadAvatar(file);
-      const newUrl = res.data.avatarUrl;
-      setAvatarUrl(newUrl);
-      if (updateUser) {
-        updateUser({ avatarUrl: newUrl });
+      const serverUrl = res.data?.avatarUrl || res.avatarUrl;
+      if (serverUrl) {
+        setAvatarUrl(serverUrl);
+        if (updateUser) {
+          updateUser({ avatarUrl: serverUrl });
+        }
       }
       toast.success('Avatar updated successfully');
     } catch (err) {
-      toast.error('Avatar upload failed');
+      toast.error(err.response?.data?.message || 'Avatar upload failed');
+    } finally {
+      e.target.value = '';
     }
   };
 

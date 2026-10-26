@@ -37,7 +37,7 @@ export const USER_AVATARS = {
 export function getAvatarUrl(avatarUrl, user) {
   if (avatarUrl && typeof avatarUrl === 'string' && avatarUrl.trim() !== '') {
     const trimmed = avatarUrl.trim();
-    if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:')) {
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) {
       return trimmed;
     }
     // Prefix relative backend upload path
@@ -70,6 +70,9 @@ export function getFallbackAvatar(user) {
  * Handles image load errors gracefully by replacing src with a guaranteed real photo avatar.
  */
 export function handleAvatarError(e, user) {
+  if (e.target.src && e.target.src.startsWith('blob:')) {
+    return;
+  }
   const safeFallback = DEFAULT_ROLE_AVATARS[user?.role] || DEFAULT_ROLE_AVATARS.DEFAULT;
   if (e.target.src !== safeFallback) {
     e.target.src = safeFallback;
