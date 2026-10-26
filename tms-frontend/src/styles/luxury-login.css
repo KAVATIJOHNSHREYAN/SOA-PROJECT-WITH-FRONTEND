@@ -19,10 +19,39 @@
     radial-gradient(at 15% 45%, rgba(37, 99, 235, 0.16) 0px, transparent 50%),
     radial-gradient(at 85% 75%, rgba(29, 78, 216, 0.18) 0px, transparent 55%),
     radial-gradient(at 50% 100%, #071225 0px, transparent 70%);
-  padding: 24px 20px;
+  padding: 18px 24px;
   font-family: 'Plus Jakarta Sans', var(--font, sans-serif);
   color: #ffffff;
   box-sizing: border-box;
+}
+
+/* Full-Screen Immersive Official Website Logo Layer */
+.luxury-bg-logo-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.luxury-bg-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.65) contrast(1.15) saturate(1.2);
+  transform: scale(1.02);
+}
+
+.luxury-bg-logo-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 50% 50%, rgba(7, 18, 37, 0.4) 0%, rgba(4, 10, 22, 0.78) 75%, #030814 100%),
+    linear-gradient(180deg, rgba(7, 18, 37, 0.65) 0%, rgba(4, 10, 22, 0.3) 50%, rgba(3, 8, 18, 0.82) 100%);
+  pointer-events: none;
 }
 
 /* Edge Vignette */
@@ -69,15 +98,84 @@
   background: radial-gradient(circle, rgba(29, 78, 216, 0.18) 0%, transparent 70%);
 }
 
-/* Top Bar: Controls */
+/* Top Bar: Brand Identity & Controls */
 .luxury-top-bar {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1320px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 20;
+}
+
+.luxury-top-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(11, 20, 38, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  padding: 6px 14px 6px 8px;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.luxury-top-logo {
+  height: 30px;
+  width: auto;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.luxury-top-brand-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.luxury-top-brand-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #f8fafc;
+}
+
+.luxury-top-brand-sub {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+
+.luxury-system-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  padding: 3px 8px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #34d399;
+}
+
+.status-dot-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
 .luxury-controls-capsule {
@@ -310,6 +408,18 @@
 .luxury-input::placeholder {
   color: #475569;
   font-weight: 400;
+}
+
+/* Fix Browser White Autofill Box on Chrome/Edge */
+.luxury-input:-webkit-autofill,
+.luxury-input:-webkit-autofill:hover, 
+.luxury-input:-webkit-autofill:focus, 
+.luxury-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0b1426 inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  border-radius: 8px;
 }
 
 .luxury-password-toggle {

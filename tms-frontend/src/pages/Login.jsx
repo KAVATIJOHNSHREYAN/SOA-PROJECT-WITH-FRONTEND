@@ -97,6 +97,21 @@ function Login() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
+      {/* Full-Screen Immersive Official Website Logo Background */}
+      <motion.div 
+        className="luxury-bg-logo-layer"
+        initial={{ scale: 1.04, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+      >
+        <img 
+          src={logoImg} 
+          alt="TMS Transport Management System" 
+          className="luxury-bg-logo-img" 
+        />
+        <div className="luxury-bg-logo-overlay" />
+      </motion.div>
+
       {/* Background Animated Ambient Glowing Mesh Spheres */}
       <motion.div 
         className="ambient-glow-sphere sphere-top"
@@ -123,8 +138,19 @@ function Login() {
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      {/* Top Right Controls Capsule */}
+      {/* Top Enterprise Brand Bar: Official Logo & Controls */}
       <header className="luxury-top-bar">
+        <div className="luxury-top-brand">
+          <img src={logoImg} alt="TMS" className="luxury-top-logo" />
+          <div className="luxury-top-brand-info">
+            <span className="luxury-top-brand-name">TMS ENTERPRISE</span>
+            <span className="luxury-top-brand-sub">TRANSPORT MANAGEMENT SYSTEM</span>
+          </div>
+          <span className="luxury-system-status">
+            <span className="status-dot-pulse" /> Cloud Active
+          </span>
+        </div>
+
         <div className="luxury-controls-capsule">
           <div className="luxury-locale-wrapper">
             <FiGlobe />
