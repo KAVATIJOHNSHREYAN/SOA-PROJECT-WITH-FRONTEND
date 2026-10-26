@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiTruck, FiLock, FiUser, FiMail, FiUserCheck } from 'react-icons/fi';
+import { FiLock, FiUser, FiMail, FiUserCheck } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import logoImg from '../assets/logo.jpg';
 import '../styles/forms.css';
 
 const ROLE_OPTIONS = [
@@ -64,9 +65,9 @@ function Register() {
     <div className="login-page">
       <div className="login-card register-card">
         <div className="login-header">
-          <FiTruck className="login-logo" />
+          <img src={logoImg} alt="TMS Enterprise Logistics" className="login-brand-logo" />
           <h1>TMS</h1>
-          <p>Create your account</p>
+          <p>Create your enterprise account</p>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-field">

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiTruck, FiLock, FiUser } from 'react-icons/fi';
+import { FiLock, FiUser } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import api from '../api/axios';
+import logoImg from '../assets/logo.jpg';
 import '../styles/forms.css';
 
 function Login() {
@@ -37,9 +38,9 @@ function Login() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <FiTruck className="login-logo" />
+          <img src={logoImg} alt="TMS Enterprise Logistics" className="login-brand-logo" />
           <h1>TMS</h1>
-          <p>Transport Management System</p>
+          <p>Enterprise Logistics & Transport Platform</p>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-field">

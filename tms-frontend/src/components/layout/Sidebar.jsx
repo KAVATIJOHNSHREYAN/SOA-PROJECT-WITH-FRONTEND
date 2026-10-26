@@ -7,6 +7,7 @@ import {
   FiDollarSign, FiBarChart2, FiActivity, FiLink, FiCreditCard, FiTarget, FiDroplet, FiTool
 } from 'react-icons/fi';
 import { getAvatarUrl, handleAvatarError } from '../../utils/avatarUtils';
+import logoImg from '../../assets/logo.jpg';
 import '../../styles/layout.css';
 
 const navGroups = [
@@ -56,9 +57,7 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <div className="sidebar-logo-icon">
-          <FiTruck />
-        </div>
+        <img src={logoImg} alt="TMS Enterprise Logistics" className="sidebar-brand-logo" />
         <div>
           <h2>{intl.formatMessage({ id: 'app.short' })}</h2>
           <span className="tag">Enterprise Logistics</span>

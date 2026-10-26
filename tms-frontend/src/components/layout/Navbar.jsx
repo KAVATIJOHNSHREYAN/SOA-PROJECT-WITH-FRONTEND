@@ -7,6 +7,7 @@ import { FiLogOut, FiMoon, FiSun, FiGlobe, FiSearch, FiLayers } from 'react-icon
 import { Link } from 'react-router-dom';
 import NotificationBell from './NotificationBell';
 import { getAvatarUrl, handleAvatarError } from '../../utils/avatarUtils';
+import logoImg from '../../assets/logo.jpg';
 import '../../styles/layout.css';
 
 const LOCALES = [
@@ -24,7 +25,7 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-left">
         <div className="workspace-badge" title="Active Logistics Network">
-          <span className="workspace-icon"><FiLayers /></span>
+          <img src={logoImg} alt="TMS" className="workspace-logo-img" />
           <span className="workspace-name">Bharat Logistics Hub</span>
           <span className="workspace-tag">Mumbai HQ</span>
         </div>
