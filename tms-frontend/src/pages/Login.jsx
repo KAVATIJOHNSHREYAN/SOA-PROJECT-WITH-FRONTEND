@@ -97,12 +97,26 @@ function Login() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Full-Screen Immersive Official Website Logo Background */}
+      {/* Full-Screen Immersive Official Website Logo Background with Heartbeat Pulse */}
       <motion.div 
         className="luxury-bg-logo-layer"
-        initial={{ scale: 1.04, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
+        animate={{ 
+          scale: [1, 1.028, 1.01, 1.042, 1, 1],
+          filter: [
+            'brightness(0.65) contrast(1.15) saturate(1.2)',
+            'brightness(0.80) contrast(1.22) saturate(1.35)',
+            'brightness(0.70) contrast(1.18) saturate(1.25)',
+            'brightness(0.86) contrast(1.25) saturate(1.40)',
+            'brightness(0.65) contrast(1.15) saturate(1.2)',
+            'brightness(0.65) contrast(1.15) saturate(1.2)'
+          ]
+        }}
+        transition={{ 
+          duration: 3.0, 
+          repeat: Infinity, 
+          ease: 'easeInOut',
+          times: [0, 0.14, 0.26, 0.42, 0.60, 1]
+        }}
       >
         <img 
           src={logoImg} 
@@ -177,9 +191,24 @@ function Login() {
         </div>
       </header>
 
-      {/* Centered Luxury Glass Card */}
+      {/* Centered Luxury Glass Card with Backside Heartbeat Pulse */}
       <main className="luxury-center-container">
-        <div className="card-ambient-glow" />
+        {/* Backside Heartbeat Glowing Aura behind Card */}
+        <motion.div 
+          className="card-ambient-glow"
+          animate={{ 
+            scale: [1, 1.28, 1.08, 1.38, 1, 1],
+            opacity: [0.38, 0.85, 0.52, 0.95, 0.38, 0.38]
+          }}
+          transition={{ 
+            duration: 3.0, 
+            repeat: Infinity, 
+            ease: 'easeInOut',
+            times: [0, 0.14, 0.26, 0.42, 0.60, 1]
+          }}
+        />
+        <div className="backside-heartbeat-pulse-ring" />
+        <div className="backside-heartbeat-pulse-ring ring-secondary" />
         
         <motion.div 
           className="luxury-login-card"
@@ -187,35 +216,15 @@ function Login() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Logo Section — The Sole Hero Brand Identity with Slow Heartbeat Pulse */}
+          {/* Logo Section — Full, Crisp, and Clean (Stationary, No Heartbeat) */}
           <div className="luxury-brand-section">
-            <motion.div 
-              className="luxury-logo-frame"
-              animate={{ 
-                scale: [1, 1.042, 1.012, 1.062, 1, 1],
-                filter: [
-                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))',
-                  'drop-shadow(0 6px 26px rgba(96, 165, 250, 0.85)) drop-shadow(0 0 45px rgba(59, 130, 246, 0.6))',
-                  'drop-shadow(0 5px 18px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 30px rgba(37, 99, 235, 0.35))',
-                  'drop-shadow(0 8px 32px rgba(96, 165, 250, 0.95)) drop-shadow(0 0 55px rgba(59, 130, 246, 0.7))',
-                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))',
-                  'drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.25))'
-                ]
-              }}
-              transition={{ 
-                duration: 2.8, 
-                repeat: Infinity, 
-                ease: 'easeInOut',
-                times: [0, 0.14, 0.26, 0.42, 0.60, 1]
-              }}
-            >
+            <div className="luxury-logo-frame">
               <img 
                 src={logoImg} 
                 alt="TMS - Transport Management System" 
                 className="luxury-logo-img" 
               />
-              <div className="luxury-logo-heartbeat-pulse" />
-            </motion.div>
+            </div>
             <h1 className="luxury-title">TMS</h1>
             <p className="luxury-subtitle">Transport Management System</p>
           </div>
