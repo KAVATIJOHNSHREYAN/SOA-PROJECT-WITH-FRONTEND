@@ -14,7 +14,7 @@ ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
 RUN npm run build
 
 # ---------- Stage 2: Serve ----------
-FROM nginx:1.25-alpine
+FROM nginx:1.31-alpine
 
 # Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
